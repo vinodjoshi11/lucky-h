@@ -1,0 +1,367 @@
+<!--suppress ALL -->
+<template>
+    <v-container fluid grid-list-xl>
+        <v-layout row wrap>
+            <v-flex xs8 offset-xs2 class="my-3">
+                <v-card>
+                    <v-toolbar color="primary">
+                        <v-card-title>
+                            <h1 style="color:white">My Quiz</h1>
+                            <v-spacer></v-spacer>
+                        </v-card-title>
+                    </v-toolbar>{{index}} {{currentQuestion}}
+                    <v-container fluid class="px-3">
+                        <v-layout row wrap>
+                            <v-flex md xs12 offset-xs1 v-for="(question, index) in  questions"
+                                    v-bind:id="question.id"  v-if="currentQuestion === index" :key="index" >
+
+                            </v-flex>
+                            <v-flex md xs12 offset-xs1 v-for="question, index in store.state.survey.questions"
+                                    v-bind:id="question.id"  v-if="currentQuestion === index" :key="index" >
+                                <h4> {{currentQuestion}} {{question.qst}} </h4>
+                                <ol class="flex md xs12  ">
+                                    <li   v-for="response in question.responses">
+                                        <div v-if="response.inputType == 'radio'"  v-model="response.next" class="radio radio-success"
+                                             v-bind:id="response.id" >
+                                            <input  type="radio" v-bind:id="'option'+ response.id"  v-bind:name="index"
+                                                    v-bind:prev="response.prev" v-bind:next="response.next"
+                                                    v-bind:value="response.option" v-model="question.userResponses"
+                                                    v-if="question.id" v-on:click="updateResponses"
+                                                    v-bind:checked="question.userResponses">
+                                            <label v-bind:for="'option'+ response.id"  >
+                                                {{response.option}}
+                                            </label>
+                                        </div>
+                                        <div v-bind:id="response.id" v-if="response.inputType == 'textbox'">
+                                            <v-text-field v-bind:name="response.option"  v-bind:label="response.option"
+                                                          v-bind:value="response.name"
+                                                          v-bind:prev="response.prev" v-bind:next="response.next"
+                                                          v-model.textbox="response.name"
+                                                          v-bind:rules="nameRules" @input="getUserInput()"
+                                                          required maxlength="50"></v-text-field>
+                                        </div>
+                                        <div v-bind:id="response.id" v-if="response.inputType == 'datepick'">
+                                            <v-menu  lazy offset-y full-width :close-on-content-click="false"
+                                                     v-model="menu" transition="scale-transition"v-bind:nudge-right="40"  min-width="290px"
+                                            >  <v-text-field slot="activator" v-bind:label="response.option" v-on:click="getDate"
+                                                             v-bind:next="response.next" v-bind:prev="response.prev"
+                                                             v-bind:max="new Date().toISOString().substr(0, 10)" min="1980-01-01"
+                                                             required v-model="question.userResponses" prepend-icon="event" readonly
+                                            ></v-text-field>
+                                                <v-date-picker show-current class="" v-model="question.userResponses">
+                                                    <template slot-scope="{ save, cancel }">
+                                                        <v-card-actions>
+                                                            <v-spacer></v-spacer>
+                                                            <v-btn flat color="primary"  @click="cancel">Cancel</v-btn>
+                                                            <v-btn flat color="primary"  @click="save">OK</v-btn>
+                                                        </v-card-actions>
+                                                    </template>
+                                                </v-date-picker>
+                                            </v-menu>
+                                        </div>
+                                        <div v-bind:id="response.id" v-if="response.inputType == 'number'">
+                                            <v-text-field v-bind:name="response.option"  v-bind:label="response.option"
+                                                          v-bind:next="response.next" v-bind:prev="response.prev"
+                                                          v-bind:value="question.userResponses" @input="getUserInput()"
+                                                          v-model.number="question.userResponses" mask="###########"
+                                                          required ></v-text-field>
+                                        </div>
+                                        <div v-bind:id="response.id" v-if="response.inputType == 'Email'">
+                                            <v-text-field v-bind:name="response.option"
+                                                          @input="getUserInput()"
+                                                          v-bind:next="response.next" v-bind:prev="response.prev"
+                                                          v-bind:label="response.option" v-bind:rules="emailRules"
+                                                          v-bind:value="question.userResponses"
+                                                          v-model="question.userResponses"
+                                                          required ></v-text-field>
+                                        </div>
+
+                                        <!--<span
+                                              v-bind:id="question.prevQuestion" v-bind:prev="response.next"
+                                              v-model="question.prevQuestion">{{response.next}}</span>-->
+
+                                    </li>
+                                    <!--<div v-for="response ,index in question.responses" >
+                                     <v-btn v-if='index === question.responses.length -1 '
+                                            color="success" v-bind:id="response.prev"
+                                             v-on:click="goToPreviousQuestion()"   > </v-btn>
+                                     </div>-->
+                                </ol>
+                                {{question}}<br>
+
+                                <v-btn color="info" v-bind:id="question.prev"
+                                       v-if="currentQuestion > 0"
+                                       v-on:click="goToPreviousQuestion(e)" >prev</v-btn>
+                                <v-btn color="success"
+                                       v-on:click="goToNextQuestion()"
+                                >Next</v-btn>
+
+                            </v-flex>
+                            {{store.state}}
+                            {{currentQuestions}}
+                            <v-btn color="success"
+                                   @click="next()"
+                            >press</v-btn>
+                        </v-layout>
+                    </v-container>
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>
+</template>
+<script>
+    import store from '../utils/store'
+    import {mapGetters, mapActions,mapState} from 'vuex';
+
+    export default {
+        data: function () {
+            return {
+                name:'',FirstName:'',middleName:'',lastName:'',
+                store: store, currentQuestion:store.state.currentQuestion,attemptQuestion:0, //userResponses:'',
+                datetime: null,index:0,arrprevQuestion:[],storeQuestion:[],nextQuestion:0,prevQuestion:0,
+                isfillQuestion:false,nameRules: [
+                    v => !!v || 'Your Name is required'
+                ],email: '',
+                emailRules: [
+                    v => !!v || 'Your E-mail is required',
+                    v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+                ]
+            }
+        },beforeMount(){
+            if (localStorage.getItem('attemptQuestion') !== 'undefined' && localStorage.getItem('attemptQuestion') !== null) {
+                console.log('defined');
+                this.currentQuestion=JSON.parse(localStorage.getItem('attemptQuestion'));
+            }else{ //this.currentQuestion=0;
+                store.dispatch('loadResponse')
+            }
+        },
+        created: function() {
+
+        },
+        computed: {
+            currentQuestions(){return store.getters.counter;},
+            ...mapState(['survey','questions','loading']),
+            ...mapGetters([
+                'getquestionsByFilter'
+            ]),
+            ...mapState({
+                userResponses: state => state.survey.questions[state.currentQuestion].userResponses
+            })
+        },mounted: function () {
+
+        }, methods: {
+            next(){store.dispatch('increment',1);},
+            updateResponses (e){   console.log(e.target.value);
+                this.$store.commit('updateResponses', e.target.value)
+                //console.log(prevQuestion);
+                this.nextQuestion= parseInt(e.path[0].attributes.next.value);
+                this.prevQuestion= parseInt(e.path[0].attributes.prev.value);
+
+                this.$store.commit('nextquestions', this.nextQuestion)
+                this.$store.commit('prevQuestion', this.prevQuestion)
+                // console.log(this.prevQuestion);
+                //this.nextQuestion=this.store.state.survey.questions[this.store.state.currentQuestion].nextQuestion
+                //this.prevQuestion=this.store.state.survey.questions[this.store.state.currentQuestion].prevQuestion
+                //  console.log(this.prevQuestion);
+                // console.log(this.$store.state)
+                try {
+                    //const serializedState = JSON.stringify(this.store.state);
+                    //localStorage.setItem('quiz', serializedState);
+                } catch (err) {
+                    console.error(`Something went wrong: ${err}`);
+                }
+                //  this.$store.state.survey.questions[this.currentQuestion].push('next',this.currentQuestion)
+                this.isfillQuestion=true;
+            },getUserInput (e){ //console.log(this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[1].children[0].attributes.next.value);
+                this.$store.commit('getUserInput', this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[1].children[0].value)
+                this.nextQuestion=parseInt(this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[1].children[0].attributes.next.value);
+                this.prevQuestion= parseInt(this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[1].children[0].attributes.prev.value);
+                this.$store.commit('nextquestions', this.nextQuestion)
+                this.$store.commit('prevQuestion', this.prevQuestion)
+                try {
+                    //  const serializedState = JSON.stringify(this.store.state);
+                    // localStorage.setItem('quiz', serializedState);
+                } catch (err) {
+                    console.error(`Something went wrong: ${err}`);
+                }
+                this.isfillQuestion=true;
+            },getDate (e) {// console.log(this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].children[1].children[1].max);
+                this.$store.commit('getUserInput', this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].children[1].children[1].max)
+                this.nextQuestion=parseInt(this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].children[1].children[1].attributes.next.value);
+                this.prevQuestion= parseInt(this.$children[0].$el.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].children[1].children[1].attributes.prev.value);
+                this.$store.commit('nextquestions', this.nextQuestion)
+                this.$store.commit('prevQuestion', this.prevQuestion)
+                try {
+                    //   const serializedState = JSON.stringify(this.store.state);
+                    //   localStorage.setItem('quiz', serializedState);
+                } catch (err) {
+                    console.error(`Something went wrong: ${err}`);
+                }
+                this.isfillQuestion=true;
+            },
+            goToNextQuestion() {
+                store.dispatch('increment',this.currentQuestion);
+                if(this.isfillQuestion)
+                {   this.currentQuestion=this.nextQuestion
+                    this.$store.commit('currentQuestion', this.currentQuestion)
+                    this.isfillQuestion=false;
+                    console.log('if')
+                }else{ console.log('else')
+                    console.log(this.currentQuestion)
+                    console.log(this.$store.state.survey.questions[this.currentQuestion].nextQuestion);
+                    this.currentQuestion=this.$store.state.survey.questions[this.currentQuestion].nextQuestion;
+                }
+
+                console.log( this.$store.state.survey.questions[this.currentQuestion]);
+                if (this.currentQuestion === this.$store.state.survey.length - 1) {
+                    this.currentQuestion = 0
+                } else {
+                    //this.currentQuestion++;
+                    //this.store.state.survey.questions[this.store.state.currentQuestion-1]
+                }
+                try {
+                    //const serializedState = JSON.stringify(this.store.state);
+                    //localStorage.setItem('quiz', serializedState);
+                    localStorage.setItem('attemptQuestion', JSON.stringify(this.currentQuestion));
+                } catch (err) {
+                    console.error(`Something went wrong: ${err}`);
+                }
+            },
+            goToPreviousQuestion() { console.log(this.isfillQuestion);
+                if(this.isfillQuestion)
+                {   //this.currentQuestion=this.prevQuestion
+                    // this.$store.commit('currentQuestion', this.prevQuestion)
+                    //this.isfillQuestion=false;
+                    console.log('if')
+                    console.log(this.store.state.survey.questions[this.currentQuestion]);
+                }else{   console.log('else')
+                    console.log(this.isfillQuestion);
+                    console.log(this.store.state.survey.questions[this.currentQuestion].prevQuestion);
+                    console.log(this.currentQuestion)
+                    this.currentQuestion=this.store.state.survey.questions[this.currentQuestion].prevQuestion;
+                    //  console.log(this.$store.state.survey.questions[this.currentQuestion].nextQuestion);
+                    // this.currentQuestion=this.$store.state.survey.questions[this.currentQuestion].nextQuestion;
+                }
+                if (this.currentQuestion === 1) {
+                    //this.currentQuestion=0;
+                    //this.store.state.currentQuestion=0;
+                }else{ //console.log(this.isfillQuestion);
+                    // console.log('else');
+                    // this.currentQuestion--;
+                    //console.log(this.store.state.survey.questions[this.currentQuestion]);
+                }
+            }
+            /*...mapActions([
+                    'next',
+                ])*/
+        }
+    }
+
+
+
+
+
+    import Vue from 'vue'
+    import VueResource from 'vue-resource'
+    import axios from "axios"
+    import Vuex from 'vuex'
+    import createPersistedState from 'vuex-persistedstate'
+    Vue.use(Vuex); Vue.use(VueResource);
+
+    //import * as actions from './actions'
+    const api = 'quiz.json'
+    const SET_LOADING = 'SET_LOADING'
+    const loadState = () => {
+        try {
+            var serializedState = localStorage.getItem('quiz');
+            if (serializedState === null || serializedState == '[]') {
+                return undefined;
+            }
+            return JSON.parse(serializedState);
+        } catch (err) {
+            return undefined;
+        }
+    };
+    const saveState= (state) => {
+        try {
+            const serializedState = JSON.stringify(state);
+            localStorage.setItem('quiz', serializedState);
+        } catch (err) {
+            console.error(`Something went wrong: ${err}`);
+        }
+    };
+    const state = {
+        loading: false,currentQuestions:0,currentQuestion:0, nextquestion:0,prevQuestion:0, //questions:[],
+        survey:[], //currentquiz:0,
+        filter: 'all',
+
+    };
+    const actions={
+        loadResponse: function({ commit }) {
+            axios.get('quiz.json').then((res) => {
+                commit('saveResponse', res.data)
+            })
+        },increment(state,payload){
+            state.commit('increment',payload);
+        }
+
+    }
+    // noinspection JSAnnotator
+    const mutations = {
+        saveResponse(state, survey) {
+            state.survey = survey;
+        },
+        [SET_LOADING](state, loading) {
+            state.loading = loading;
+        },setQuestions(state, questions){
+            state.questions = questions
+        },updateResponses (state,userResponses){  // console.log(state.currentQuestion);
+            state.survey.questions[state.currentQuestion].userResponses= userResponses
+        },getUserInput(state, userResponses) {
+            //state.userResponses= userResponses;
+            state.survey.questions[state.currentQuestion].userResponses= userResponses
+            console.log(state.currentQuestion);
+        },currentQuestion(state, currentQuestion) {
+            state.currentQuestion=currentQuestion
+            console.log(state.currentQuestion);
+            // console.log(state.survey.questions.nextquestion);
+        },nextquestions(state, nextQuestion) {
+            state.nextQuestion=nextQuestion
+            state.survey.questions[state.currentQuestion].nextQuestion= nextQuestion
+            // console.log(state.survey.questions[state.currentQuestion].nextQuestion);
+            //console.log(state.currentQuestion);
+            // state.survey.questions.push(nextquestion)
+            // console.log(currentQuestion);
+        },prevQuestion(state, prevQuestion) {
+            state.prevQuestion=prevQuestion
+            state.survey.questions[state.currentQuestion].prevQuestion= prevQuestion
+        },increment(state,payload){
+            state.currentQuestions+=payload;
+        }
+    }
+
+    const getters={
+        getquestionsByFilter: state =>{  console.log(state)
+            switch (state.filter) {
+                case 'all':
+                    return state.survey.questions
+                case 'complete':
+                    return state.survey.questions.filter(questions => questions.status == 2)
+                case 'uncomplete':
+                    return state.survey.questions.filter(questions => questions.status == 1)
+                default:
+                    return this.$store.state.survey.questions;
+            }
+        },counter(state){
+            return state.currentQuestions;
+        }
+    }
+    export default new Vuex.Store({
+        plugins: [createPersistedState({key: 'quiz',})],
+        strict: false,
+        state,actions,
+        saveState,
+        mutations,
+        getters
+    })
+</script>

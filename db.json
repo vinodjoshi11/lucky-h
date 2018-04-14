@@ -1,0 +1,260 @@
+{
+    "questions": [
+        {
+            "id":"0",
+            "qst": "What is your gender?",
+            "responses": [
+                {
+                    "id":"1",
+                    "option":"Male","next":"1",
+                    "inputType": "radio"
+                },
+                {  "id":"2",
+                    "option":"Female","next":"1",
+                    "inputType": "radio"
+                }
+            ]
+        },
+        { "id":"1",
+            "qst": "What is your name?",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"textBox","next":"2",
+                    "option": "Enter your First Name"
+                },
+                {
+                    "id":"2",
+                    "inputType":"textBox","next":"2",
+                    "option": "Enter your Middle Name"
+                },
+                {
+                    "id":"3",
+                    "inputType":"textBox","next":"2",
+                    "option": "Enter your Last Name"
+                }
+            ]
+        },
+        {
+            "id":"2",
+            "qst": "Whats Your date of birth?",
+            "responses": [
+                {
+                    "id":"1","next":3,"prev":"1",
+                    "inputType":"datePick",
+                    "option": "Enter your date of birth"
+                }
+            ]
+        },
+        {
+            "id":"3",
+            "qst": "Whats the best phone number to reach you at?",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"number","next":"4",
+                    "option": "Enter your phone number"
+                }
+            ]
+        },
+        {
+            "id":"4",
+            "qst": "Whats your Email Address?",
+            "responses": [
+                {   "id":"1",
+                    "inputType":"Email","next":"5",
+                    "option": "Enter your Email Address"
+                }
+            ]
+        },
+        {
+            "id":"5",
+            "qst": "Are you Married?",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"radio","next":"6",
+                    "option": "Yes"
+                },
+                {   "id":"2",
+                    "inputType":"radio","next":"7",
+                    "option": "No"
+                }
+            ]
+        },
+        {
+            "id":"6",
+            "qst": "Do you have children together",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"radio","next":"8",
+                    "option": "Yes"
+
+                },
+                {   "id":"2",
+                    "inputType":"radio","next":"10",
+                    "option": "No"
+                }
+            ]
+        },
+        {
+            "id":"7",
+            "qst": "Do you have children",
+            "isLogin":true,
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"radio","next":"8",
+                    "option": "Yes"
+                },
+                {   "id":"2",
+                    "inputType":"radio","next":"8",
+                    "option": "No"
+                }
+            ]
+        },
+        {
+            "id":"8",
+            "qst": "Name of 1st first child ",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"textBox","next":"9",
+                    "option": "Enter your First Name"
+                },
+                {
+                    "id":"2",
+                    "inputType":"textBox","next":"9",
+                    "option": "Enter your Middle Name"
+                },
+                {
+                    "id":"3",
+                    "inputType":"textBox","next":"9",
+                    "option": "Enter your Last Name"
+                },
+                { "id":"4",
+                    "inputType":"datePick","next":"9",
+                    "option": "Enter your date of birth"
+                }
+            ]
+        },
+        {
+            "id":"9",
+            "qst": "Do you have another child together together?",
+            "nextChild":"secondChild",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"radio","next":"8.1",
+                    "option": "Yes"
+                },
+                {
+                    "id":"2",
+                    "inputType":"radio","next":"8",
+                    "option": "No"
+                }
+            ],"child":[]
+        },
+        {
+            "id":"10",
+            "qst": "does your spouse have any children from a prior marriage or relationship?",
+            "nextChild":"secondChild",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"radio","next":"10",
+                    "option": "Yes"
+                },
+                {
+                    "id":"2",
+                    "inputType":"radio","next":10,
+                    "option": "No"
+                }
+            ],"child":[]
+        }
+    ],
+    "BeneficiariesSuccessors":[
+        {
+            "id":"0",
+            "qst": "Who do you want to manage your estate if you die or become incapacitated?",
+            "choice":"1st choice",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"textBox","next":"1",
+                    "option": "Enter your First Name"
+                },
+                {
+                    "id":"2",
+                    "inputType":"textBox","next":"1",
+                    "option": "Enter your Middle Name"
+                },
+                {
+                    "id":"3",
+                    "inputType":"textBox","next":"1",
+                    "option": "Enter your Last Name"
+                },
+                { "id":"4",
+                    "inputType":"datePicker","next":"1",
+                    "option": "Enter your date of birth"
+                },{
+                    "id":"5",
+                    "inputType":"secondChoice","next":"1",
+                    "option":"2nd choice"
+                },
+                {
+                    "id":"6",
+                    "inputType":"textBox","next":"1",
+                    "option": "Enter your First Name"
+                },
+                {
+                    "id":"7",
+                    "inputType":"textBox","next":"1",
+                    "option": "Enter your Middle Name"
+                },
+                {
+                    "id":"8",
+                    "inputType":"textBox","next":"1",
+                    "option": "Enter your Last Name"
+                },
+                { "id":"9",
+                    "inputType":"datePicker2","next":"1",
+                    "option": "Enter your date of birth"
+                }
+            ]
+        },{
+            "id":"2",
+            "qst":"would you like to add another successor Trustee?",
+            "nextChild":"secondChild",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"radio","next":"2",
+                    "option": "Yes"
+                },
+                {
+                    "id":"2",
+                    "inputType":"radio","next":"2",
+                    "option": "No"
+                }
+            ],"child":[]
+        },{
+            "id":"3",
+            "qst":"would you want No.1 [Name]and No.2[Name] To serve together as co-trustees, or separately in the order indicated?",
+            "nextChild":"secondChild",
+            "responses": [
+                {
+                    "id":"1",
+                    "inputType":"radio",
+                    "option": "Yes"
+                },
+                {
+                    "id":"2",
+                    "inputType":"radio",
+                    "option": "No"
+                }
+            ],"child":[]
+        }
+    ]
+}

@@ -1,0 +1,85 @@
+{
+  "childQuestions":[
+    { "childIndex":"Yes",
+      "qst": "Name of ",
+      "responses": [
+        {
+          "id":"1",
+          "inputType":"textBox",
+          "option": "Enter your First Name"
+        },
+        {
+          "id":"2",
+          "inputType":"textBox",
+          "option": "Enter your middle Name"
+        },
+        {
+          "id":"3",
+          "inputType":"textBox",
+          "option": "Enter your last Name"
+        },
+        { "id":"4",
+          "inputType":"datePick",
+          "option": "Enter your date of birth"
+        }
+      ]
+    },{
+      "childIndex":"No",
+      "qst": "Do you have another child?",
+      "nextChild":"secondChild",
+      "responses": [
+        {
+          "id":"1",
+          "inputType":"radio",
+          "option": "Yes"
+        },
+        {
+          "id":"2",
+          "inputType":"radio",
+          "option": "No"
+        }
+      ]
+    },
+    {
+      "childIndex":"Yes",
+      "qst": "Name of ",
+      "responses": [
+        {
+          "id":"1",
+          "inputType":"textBox",
+          "option": "Enter your First Name"
+        },
+        {
+          "id":"2",
+          "inputType":"textBox",
+          "option": "Enter your middle Name"
+        },
+        {
+          "id":"3",
+          "inputType":"textBox",
+          "option": "Enter your last Name"
+        },
+        { "id":"4",
+          "inputType":"datePick",
+          "option": "Enter your date of birth"
+        }
+      ]
+    },{
+      "childIndex":"No",
+      "qst": "Do you have another child?",
+      "nextChild":"secondChild",
+      "responses": [
+        {
+          "id":"1",
+          "inputType":"radio",
+          "option": "Yes"
+        },
+        {
+          "id":"2",
+          "inputType":"radio",
+          "option": "No"
+        }
+      ]
+    }
+  ]
+}

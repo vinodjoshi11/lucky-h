@@ -1,0 +1,83 @@
+{
+  "title": "My quiz",
+  "questions": [
+    {    "id":"1",
+        "qst": "Question 1",
+        "responses": [
+           {  "id":"1",  
+              "optionType":"radio","nextquiz":"2",
+              "option": "One " 
+           },
+           {  "id":"2", 
+              "optionType":"radio","nextquiz":"2",
+              "option": "Two" 
+           },
+           {  "id":"3", 
+              "optionType":"radio","nextquiz":"3",
+              "option": "Three " 
+           },
+           {   "id":"4", 
+               "optionType":"radio","nextquiz":"4",
+               "option": "Four" 
+           }
+        ]
+     },
+     { "id":"2",
+        "qst": "Enter Your address", 
+        "responses": [
+           {  
+              "id":"1",
+              "optionType":"textarea",
+              "validate":"required",
+              "option": "Enter your Address"  
+           }
+        ]
+     },
+     { "id":"3",
+        "qst": "Question 3",
+        
+        "responses": [
+           {  "id":"1", 
+              "optionType":"radio",
+              "option": "one" 
+           },
+           {  "id":"2", 
+              "optionType":"radio",
+              "option": "Right answer" 
+           },
+           {  "id":"3", 
+              "optionType":"radio", 
+              "option": "Wrong " 
+           }
+        ]
+     },
+     { 
+      "id":"4",
+      "qst": "Question 4", 
+      "responses": [
+            { "id":"1", 
+                "optionType":"radio",
+              "option": "True !" 
+            },
+          {   "id":"2", 
+              "optionType":"radio",
+              "option": "False!" 
+          }
+      ]
+   },
+    { 
+    "id":"5",
+    "qst": "Question 5", 
+    "responses": [
+        {   "id":"1",
+            "optionType":"radio",
+            "option": "Male" 
+        },
+        {   "id":"2",
+            "optionType":"radio",
+            "option": "Female" 
+        }
+    ]
+  }
+  ]
+}

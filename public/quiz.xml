@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questions>
+<Quiz_title>Being Bullied</Quiz_title>
+ <question questionType="mcq" correct="1" isAttemped="false" userans="" section="1" QNo="1" id="1">
+	<qst>  
+		<![CDATA[ Are you male? ]]> 
+	</qst> 
+	<choices>
+		<option id="1"> 
+			<text order="1">
+			<![CDATA[Yes]]>
+			</text>
+		</option>
+		<option id="2"> 
+			<text order="1">
+			<![CDATA[No]]>
+			</text>
+		</option>
+	</choices> 
+	</question>
+	<question questionType="mcq" correct="0" isAttemped="false" userans="" section="1" QNo="2" id="2">
+		<qst> 
+			<text order="1">
+			<![CDATA[ What is the purpose of the book? ]]>
+			</text>
+		</qst>
+	 
+	<choices>
+		<option id="1"> 
+		<text order="1">
+		<![CDATA[
+		The book shows you what bullying is and how to deal with it.
+		]]>
+		</text>
+		</option>
+		<option id="2"> 
+			<text order="1">
+			<![CDATA[
+			The book is about the good things about being a bully.
+			]]>
+			</text>
+		</option>
+		<option id="3"> 
+		<text order="1">
+		<![CDATA[ The book has a story about bullies in the past. ]]>
+		</text>
+		</option>
+		<option id="4"> 
+			<text order="1">
+			<![CDATA[
+			The book tells you what to look for when a bully is an adult.
+			]]>
+			</text>
+		</option>
+	</choices> 
+	</question>
+	<question questionType="mcq" correct="2" isAttemped="false" userans="" section="1" QNo="3" id="3">
+		<qst>  
+			<![CDATA[ How are you like a bully? ]]>
+			 
+		</qst>
+	 
+		<choices>
+			<option id="1"> 
+			<text order="1">
+			<![CDATA[ Bullies are the same age as you. ]]>
+			</text>
+			</option>
+			<option id="2"> 
+			<text order="1">
+			<![CDATA[
+			Bullies have the same hair color and eyes like you.
+			]]>
+			</text>
+			</option>
+			<option id="3"> 
+			<text order="1">
+			<![CDATA[
+			Bullies come in all shapes and sizes just like you.
+			]]>
+			</text>
+			</option>
+			<option id="4"> 
+			<text order="1">
+			<![CDATA[ Bullies say mean things just like you. ]]>
+			</text>
+			</option>
+		</choices> 
+	</question>
+	<question questionType="mcq" correct="0" isAttemped="false" userans="" section="1" QNo="4" id="4">
+		<qst> 
+			<text order="1">
+			<![CDATA[ What does it mean to "ignore a bully"? ]]>
+			</text>
+		</qst> 
+		<choices>
+			<option id="1">
+			<text order="1">
+			<![CDATA[ It means to not look at them or talk to them. ]]>
+			</text>
+			</option>
+			<option id="2">
+			 <text order="1">
+			<![CDATA[ It means to be nice to them. ]]>
+			</text>
+			</option>
+			<option id="3">
+			 <text order="1">
+			<![CDATA[ It means to tell an adult about them. ]]>
+			</text>
+			</option>
+			<option id="4">
+			 <text order="1">
+			<![CDATA[ It means to help them when they are hurt. ]]>
+			</text>
+			</option>
+		</choices> 
+	</question>
+	<question questionType="mcq" correct="1" isAttemped="false" userans="" section="1" QNo="5" id="5">
+			<qst> <text order="1">
+				<![CDATA[ Why do bullies act tough? ]]>
+				</text>
+			</qst> 
+		<choices>
+			<option id="1">
+			 <text order="1">
+			<![CDATA[ Bullies like to be mean. ]]>
+			</text>
+			</option>
+			<option id="2">
+			 <text order="1">
+			<![CDATA[
+			Bullies act tough so no one will see how scared or lonely they really are.
+			]]>
+			</text>
+			</option>
+			<option id="3">
+			 <text order="1">
+			<![CDATA[
+			Bullies know they are better than the rest of other people.
+			]]>
+			</text>
+			</option>
+			<option id="4">
+			 <text order="1">
+			<![CDATA[ Bullies are paid to be tough. ]]>
+			</text>
+			</option>
+		</choices> 
+	</question>
+</QuizMaster>
